@@ -1,17 +1,22 @@
 package com.example.ride.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import com.example.ride.Model.RideEvent;
+import com.example.ride.Repository.RideRepository;
 
 @Service
 public class AnalyticsCosumer {
    
+    @Autowired
+    RideRepository rideRepository;
+    
     @KafkaListener(topics = "ride-events" , groupId = "analytics")
-    public void analysis(RideEvent message)
+    public void analysis(RideEvent rideEvent)
     {
-       System.out.println("📊 Analytics: Received ride event -> " + message);
+       System.out.println("📊 Analytics: Received ride event -> " + rideEvent);
     }
 
     @KafkaListener(topics = "ride-events" ,groupId="notification-consumer")
